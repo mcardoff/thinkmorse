@@ -2,7 +2,7 @@
 
 from time import sleep
 
-text_string = "MM7XRT"  # Text to display in morse
+text_string = "HELLOWORLD"  # Text to display in morse
 multiplier = 0.15  # Speed multiplier (less is faster)
 
 MORSE_CODE_DICT = { 'A':'.-', 'B':'-...',
@@ -49,15 +49,16 @@ def text_to_morse(txt):
 
 def led(state):
     """ Turn the LED on (true) or off (false). """
-    led = open("/sys/kernel/debug/ec/ec0/io", "wb")
-    led.seek(12)
+    led = open("/sys/class/leds/platform::micmute/brightness", "w")
+    # led = open("/sys/class/leds/input3::capslock/brightness", "w")
     
     if state:
-        led.write(b"\x8a")  # LED On
+        led.write("1")  # LED On
     else:
-        led.write(b"\x0a")  # LED Off
+        led.write("0")  # LED Off
         
     led.flush()
+    led.close()
 
 
 if __name__ == "__main__":
